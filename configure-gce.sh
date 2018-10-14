@@ -46,7 +46,9 @@ spin_up_instance_first () {
 run_as_root 
 gcloud_auth
 spin_up_instance_first
-get_default_project 
+get_default_project
+generate_crontab
+
 
 
 exit
