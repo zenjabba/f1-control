@@ -2,20 +2,21 @@
 # GCE Instance Revive Script
 # general GCE startup script
 # Initial version from RXWatcher
-# $1 PROJECTID, $2 ZONE, $3 INSTANCE, $4 LOGFILE
+#  $1 INSTANCE, $2 ZONE, $3 PROJECTID
+# Welcome to funtimes
 
-PROJECTID=$1
 ZONE=$2
-INSTANCE=$3
+INSTANCE=$1
+PROJECTID=$3
 LOGFILE="/var/log/gcerevive/$PROJECTID-$INSTANCE"
 
 check_status () {
 
 echo "$(date "+%d.%m.%Y %T") Checking $INSTANCE Status.."
-PRESTATUS=$(/usr/bin/gcloud compute instances describe $INSTANCE --project=$PROJECTID --zone=$ZONE | grep  "status")
+PRESTATUS=$(/usr/bin/gcloud compute instances describe $INSTANCE --project=$PROJECTID --zone=$ZONE --| grep  "status")
 STATUS=${PRESTATUS:7}
 if [ $STATUS = "RUNNING" ]; then
-        echo "$(date "+%d.%m.%Y %T") $INSTANCE Instance is Running at"$(/usr/bin/gcloud compute instances describe $INSTANCE --project=$PROJECTID --zone=$ZONE|grep natIP | cut -d':'  -f2) |tee -a $LOGFILE
+        echo "$(date "+%d.%m.%Y %T") $INSTANCE Instance is Running at"$(/usr/bin/gcloud compute instances describe $INSTANCE --project=$PROJECTID --zone=$ZONE| grep natIP | cut -d':'  -f2) |tee -a $LOGFILE
         exit
 fi
 if [ $STATUS = "TERMINATED" ]; then
