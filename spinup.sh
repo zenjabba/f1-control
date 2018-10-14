@@ -61,6 +61,7 @@ gcloud config set project $PROJECTID
 # business end of the script
 
 get_default_project
+configure_gcloud
 spin_up_instance
 
 if [ $? == 0 ]
@@ -76,5 +77,5 @@ fi
 echo "Sleeping $BOLD 240 $NORMAL seconds till instance comes up"
 sleep 240
 
-configure_gcloud
+
 configure_rclone
