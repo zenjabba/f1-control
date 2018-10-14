@@ -4,6 +4,8 @@
 # $1 = Name of Instance
 # $2 = Zone to run it in
 
+BOLD=$(tput bold)
+NORMAL=$(tput sgr0)
 
 MACHINE_TYPE="n1-standard-8"
 
@@ -12,7 +14,7 @@ then
 	sleep 1
 	
 else
-	echo "This script can take 2 variables ie, $0 instance_name zone"
+	echo "This script needs to take 2 variables ie, $0 instance_name zone"
 fi
 
 INSTANCE_NAME=$1
@@ -43,7 +45,7 @@ gcloud beta compute instances create $INSTANCE_NAME --zone=$ZONE \
 
 configure_rclone () {
 
-echo "Configure rclone for your new instance $INSTANCE_NAME"
+echo "Configure rclone for your new instance $BOLD$INSTANCE_NAME $NORMAL"
 
 gcloud compute config-ssh --quiet > /dev/null
 gcloud compute ssh --zone $ZONE $INSTANCE_NAME -- 'mkdir -p /root/.config/rclone'
@@ -63,15 +65,16 @@ spin_up_instance
 
 if [ $? == 0 ]
 then
-	echo "Access this instance with the command gcloud beta compute ssh $INSTANCE_NAME"
+    echo ""
+	echo "Access this instance with the command $BOLD# gcloud beta compute ssh $INSTANCE_NAME$NORMAL"
 	
 else
-	echo "Spinup failed. Fix error and start again with $0 $1 $2"
+	echo "$BOLDSpinup failed.$NORMAL Fix the error and start again with $0 $1 $2"
 	exit $?
 fi
 
-echo "Sleeping till instance comes up"
-sleep 60
+echo "Sleeping $BOLD240 $NORMALseconds till instance comes up"
+sleep 240
 
 configure_gcloud
 configure_rclone
