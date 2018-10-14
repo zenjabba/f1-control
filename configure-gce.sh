@@ -1,3 +1,4 @@
+#!/bin/bash
 # First run to set things up correctly
 #
 
@@ -23,9 +24,12 @@ gcloud auth login --quiet $USERNAME
 
 run_as_root () {
 
-if [[ $EUID -ne 0 ]]; then
-   echo "This script must be run as root" 
-   exit 1
+if [[ $EUID = 0 ]]
+then
+	sleep 1
+else
+	echo "This script must be run as root"
+   	exit 1
 fi
 
 }
@@ -43,7 +47,7 @@ spin_up_instance_first () {
 }
 
 
-run_as_root 
+run_as_root
 gcloud_auth
 spin_up_instance_first
 get_default_project
@@ -52,4 +56,3 @@ generate_crontab
 
 
 exit
-
