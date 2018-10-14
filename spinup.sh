@@ -49,7 +49,7 @@ gcloud compute ssh --zone $ZONE $INSTANCE_NAME -- '/usr/bin/rclone config --conf
 
 }
 
-config_gcloud
+config_gcloud () {
 
 gcloud config set project $PROJECTID
 
