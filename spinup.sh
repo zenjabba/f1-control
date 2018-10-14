@@ -61,13 +61,15 @@ spin_up_instance
 
 if [ $? == 0 ]
 then
+	echo "Access this instance with the command gcloud beta compute ssh $INSTANCE_NAME"
+	
+else
 	echo "Spinup failed. Fix error and start again with $0 $1 $2"
 	exit $?
-else
-	echo "Access this instance with the command gcloud beta compute ssh $INSTANCE_NAME"
 fi
 
 echo "Sleeping till instance comes up"
 sleep 60
+
 configure_gcloud
 configure_rclone
