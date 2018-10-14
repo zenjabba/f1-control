@@ -17,7 +17,7 @@ PROJECTID=$(basename $PROJECTID)
 
 gcloud_auth () {
 
-gcloud auth login $USERNAME
+gcloud auth login --quiet $USERNAME
 
 }
 
