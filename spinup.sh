@@ -9,7 +9,7 @@ MACHINE_TYPE="n1-standard-8"
 
 if [ "$#" -ne 0 ]
 then
-	echo "This script can take 3 variables ie, $0 instance_name zone"
+	echo "This script can take 2 variables ie, $0 instance_name zone"
 else
 	sleep 1
 fi
@@ -28,12 +28,29 @@ gcloud beta compute instances create $INSTANCE_NAME --zone=$ZONE \
 --boot-disk-size=10GB \
 --boot-disk-type=pd-standard \
 --boot-disk-device-name=$INSTANCE_NAME \
---metadata startup-script='curl https://raw.githubusercontent.com/zenjabba/install-gce-copier/master/install-copier.sh | sudo bash'
+--metadata startup-script='curl https://raw.githubusercontent.com/zenjabba/f1-control/master/install-gce-copier.sh | sudo bash'
 
 }
 
+configure_rclone () {
+
+echo "Configure rclone for your new instance $INSTANCE_NAME"
+gcloud compute ssh --zone $ZONE $INSTANCE_NAME -- 'mkdir -p /root/.config/rclone'
+gcloud compute ssh --zone $ZONE $INSTANCE_NAME -- '/usr/bin/rclone config --config=/root/.config/rclone/rclone.conf'
+
+}
 
 # business end of the script
 
 
 spin_up_instance
+
+if [ $? == 0 ]
+then
+	echo "Spinup failed. Fix error and start again with $0 $1 $2"
+	exit $?
+else
+	echo "Access this instance with the command gcloud beta compute ssh $INSTANCE_NAME"
+fi
+
+configure_rclone
