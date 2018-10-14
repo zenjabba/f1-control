@@ -29,15 +29,11 @@ spin_up_instance_first () {
 
 }
 
-crontab_entry () {
-
-crontab -l | { cat; echo 0 * * * * /opt/f1-control/gcerevive.sh $INSTANCE_NAME $INSTANCE_ZONE"; } | crontab -
-
-}
-
 run_as_root 
 gcloud_auth
 spin_up_instance_first
+
+crontab -l | { cat; echo 0 * * * * /opt/f1-control/gcerevive.sh $INSTANCE_NAME $INSTANCE_ZONE"; } | crontab -
 
 exit
 
