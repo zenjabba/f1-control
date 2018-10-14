@@ -26,10 +26,15 @@ run_as_root () {
 
 if [[ $EUID = 0 ]]
 then
-	sleep 1
+	echo "running as sudo"
 else
-	echo "This script must be run as root"
-   	exit 1
+	sudo -k # make sure to ask for password on next sudo
+    if sudo true; then
+    echo "auto upgraded to sudo"
+    else
+        echo "couldn't auto upgrade to sudo"
+        exit 1
+    fi
 fi
 
 }
