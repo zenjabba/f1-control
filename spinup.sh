@@ -67,7 +67,7 @@ spin_up_instance
 if [ $? == 0 ]
 then
     echo ""
-	echo "Access this instance with the command $BOLD# gcloud beta compute ssh $INSTANCE_NAME$NORMAL --zone $ZONE --PROJECTID=$PROJECTID"
+	echo "Access this instance with the command $BOLD# gcloud beta compute ssh $INSTANCE_NAME$NORMAL --zone $ZONE --project=$PROJECTID"
 	
 else
 	echo "$BOLDSpinup failed.$NORMAL Fix the error and start again with $0 $1 $2"
