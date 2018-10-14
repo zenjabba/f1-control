@@ -9,15 +9,24 @@ MACHINE_TYPE="n1-standard-8"
 
 if [ "$#" -ne 0 ]
 then
-	echo "This script can take 2 variables ie, $0 instance_name zone"
-else
 	sleep 1
+	
+else
+	echo "This script can take 2 variables ie, $0 instance_name zone"
 fi
 
 INSTANCE_NAME=$1
 ZONE=$2
 
+get_default_project () {
+
+PROJECTID=$(gcloud projects list --uri)
+PROJECTID=$(basename $PROJECTID)
+
+}
+
 spin_up_instance () {
+
 
 gcloud beta compute instances create $INSTANCE_NAME --zone=$ZONE \
 --machine-type=$MACHINE_TYPE --subnet=default --network-tier=PREMIUM --no-restart-on-failure \
@@ -40,9 +49,14 @@ gcloud compute ssh --zone $ZONE $INSTANCE_NAME -- '/usr/bin/rclone config --conf
 
 }
 
+config_gcloud
+
+gcloud config set project $PROJECTID
+
+}
 # business end of the script
 
-
+get_default_project
 spin_up_instance
 
 if [ $? == 0 ]
@@ -53,4 +67,7 @@ else
 	echo "Access this instance with the command gcloud beta compute ssh $INSTANCE_NAME"
 fi
 
+echo "Sleeping till instance comes up"
+sleep 60
+configure_gcloud
 configure_rclone
