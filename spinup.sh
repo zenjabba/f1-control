@@ -44,12 +44,14 @@ gcloud beta compute instances create $INSTANCE_NAME --zone=$ZONE \
 configure_rclone () {
 
 echo "Configure rclone for your new instance $INSTANCE_NAME"
+
+gcloud compute config-ssh --quiet > /dev/null
 gcloud compute ssh --zone $ZONE $INSTANCE_NAME -- 'mkdir -p /root/.config/rclone'
 gcloud compute ssh --zone $ZONE $INSTANCE_NAME -- '/usr/bin/rclone config --config=/root/.config/rclone/rclone.conf'
 
 }
 
-config_gcloud () {
+configure_gcloud () {
 
 gcloud config set project $PROJECTID
 
