@@ -30,7 +30,7 @@ PROJECTID=$(basename $PROJECTID)
 spin_up_instance () {
 
 
-gcloud beta compute instances create $INSTANCE_NAME --zone=$ZONE \
+gcloud beta compute instances create $INSTANCE_NAME --quiet --zone=$ZONE \
 --machine-type=$MACHINE_TYPE --subnet=default --network-tier=PREMIUM --no-restart-on-failure \
 --maintenance-policy=TERMINATE --preemptible  \
 --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append \
@@ -66,14 +66,14 @@ spin_up_instance
 if [ $? == 0 ]
 then
     echo ""
-	echo "Access this instance with the command $BOLD# gcloud beta compute ssh $INSTANCE_NAME$NORMAL"
+	echo "Access this instance with the command $BOLD# gcloud beta compute ssh $INSTANCE_NAME$NORMAL --zone $ZONE --PROJECTID=$PROJECTID"
 	
 else
 	echo "$BOLDSpinup failed.$NORMAL Fix the error and start again with $0 $1 $2"
 	exit $?
 fi
 
-echo "Sleeping $BOLD240 $NORMALseconds till instance comes up"
+echo "Sleeping $BOLD 240 $NORMAL seconds till instance comes up"
 sleep 240
 
 configure_gcloud
