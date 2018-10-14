@@ -1,8 +1,12 @@
 # First run to set things up correctly
+#
 
 USERNAME=$1
+INSTANCE_NAME="first-mover"
+INSTANCE_ZONE="us-east1-a"
 
-echo "This will create a control account with a different email address"
+echo "This will create a control account with a different email address, and spin up your first instance with all the applications pre-installed."
+echo "It will also add to your root CRONTAB a check for every hour to make sure your instance is up and running"
 
 gcloud_auth () {
 
@@ -21,7 +25,13 @@ fi
 
 spin_up_instance_first () {
 
-/opt/f1-control/spinup.sh
+/opt/f1-control/spinup.sh $INSTANCE_NAME $INSTANCE_ZONE
+
+}
+
+crontab_entry () {
+
+crontab -l | { cat; echo 0 * * * * /opt/f1-control/gcerevive 
 
 }
 
