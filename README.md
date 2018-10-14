@@ -8,4 +8,4 @@ To install f1-control on your f1-gce server
 
 4. `cd f1-control`
 
-5. `configure-gce.sh "email address of GCE instance your want to run your mover instances in"`
+5. `sudo ./configure-gce.sh "email address of GCE instance your want to run your mover instances in"`
