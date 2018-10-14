@@ -2,17 +2,20 @@
 # User Configuration Section
 # This is the user configuration section
 # $1 = Name of Instance
-# $2 = Zone to run it in. If nothing is supplied, defaults are made
-# $3 = Project_ID
+# $2 = Zone to run it in
+
 
 MACHINE_TYPE="n1-standard-8"
 
 if [ "$#" -ne 0 ]
 then
-	echo "This script can take 3 variables ie, $0 instance_name zone project_id"
+	echo "This script can take 3 variables ie, $0 instance_name zone"
 else
 	sleep 1
 fi
+
+INSTANCE_NAME=$1
+ZONE=$2
 
 spin_up_instance () {
 
