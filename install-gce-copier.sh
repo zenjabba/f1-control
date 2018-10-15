@@ -56,6 +56,8 @@ chmod a+x /opt/runcopy.sh
 sed -i -e '$i \sleep 60 \n' /etc/rc.local
 sed -i -e '$i \/opt/runcopy.sh &\n' /etc/rc.local
 
+}
+
 #
 # This is where the "stuff" happens
 
