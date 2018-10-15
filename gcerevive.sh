@@ -45,7 +45,7 @@ PROJECTID=$(basename $PROJECTID)
 
 }
 
-if [$PROJECTID = ""]; then
+if [ $PROJECTID = ""]; then
 	echo "Getting default PROJECTID"
 	get_default_project
 else
