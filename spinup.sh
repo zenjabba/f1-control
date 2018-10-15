@@ -49,6 +49,7 @@ echo "Configure rclone for your new instance $BOLD$INSTANCE_NAME $NORMAL"
 
 gcloud compute config-ssh --quiet > /dev/null
 gcloud compute ssh --zone $ZONE $INSTANCE_NAME -- 'mkdir -p /root/.config/rclone'
+echo "Please define source:/ for source location and destination:/ for destination location"
 gcloud compute ssh --zone $ZONE $INSTANCE_NAME -- '/usr/bin/rclone config --config=/root/.config/rclone/rclone.conf'
 
 }
@@ -67,7 +68,7 @@ spin_up_instance
 if [ $? == 0 ]
 then
     echo ""
-	echo "Access this instance with the command $BOLD# gcloud beta compute ssh $INSTANCE_NAME$NORMAL --zone $ZONE --project=$PROJECTID"
+	echo "Access this instance with the command $BOLD# gcloud beta compute ssh $INSTANCE_NAME --zone $ZONE --project=$PROJECTID$NORMAL"
 	
 else
 	echo "$BOLDSpinup failed.$NORMAL Fix the error and start again with $0 $1 $2"
