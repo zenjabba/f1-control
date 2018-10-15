@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # 
 # creates new install script.
-# fixed missing }
+# fixed missing }, but still not updateding the raw
 
 update-upgrade () {
 
