@@ -2,7 +2,7 @@
 # GCE Instance Revive Script
 # general GCE startup script
 # Initial version from RXWatcher
-#  $1 INSTANCE, $2 ZONE, $3 PROJECTID
+#  $1 INSTANCE, $2 ZONE $3 PROJECTID
 # Welcome to funtimes
 
 ZONE=$2
@@ -29,7 +29,6 @@ fi
 
 }
 
-
 check_if_logdir_exists () {
 
 if [ ! -d "/var/log/gcerevive/" ]; then
@@ -37,6 +36,20 @@ if [ ! -d "/var/log/gcerevive/" ]; then
 fi
 
 }
+
+get_default_project () {
+
+PROJECTID=$(gcloud projects list --uri)
+PROJECTID=$(basename $PROJECTID)
+
+}
+
+if [$PROJECTID = ""]; then
+	echo "Getting default PROJECTID"
+	get_default_project
+else
+	echo "PROJECTID = $PROJECTID" 
+fi
 
 check_if_logdir_exists
 check_status
