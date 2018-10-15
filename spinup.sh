@@ -75,8 +75,8 @@ else
 	exit $?
 fi
 
-echo "Sleeping $BOLD 240 $NORMAL seconds till instance comes up"
-sleep 240
+echo "Sleeping $BOLD 60 $NORMAL seconds till instance comes up"
+sleep 60
 
 
 configure_rclone
