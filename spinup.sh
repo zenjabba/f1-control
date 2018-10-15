@@ -51,6 +51,7 @@ gcloud compute config-ssh --quiet > /dev/null
 gcloud compute ssh --zone $ZONE $INSTANCE_NAME -- 'mkdir -p /root/.config/rclone'
 echo "Please define source:/ for source location and destination:/ for destination location"
 gcloud compute ssh --zone $ZONE $INSTANCE_NAME -- '/usr/bin/rclone config --config=/root/.config/rclone/rclone.conf'
+gcloud compute ssh --zone $ZONE $INSTANCE_NAME -- 'reboot'
 
 }
 
