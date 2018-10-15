@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # 
 # creates new install script.
+# fixed missing }
 
 update-upgrade () {
 
