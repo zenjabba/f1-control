@@ -39,12 +39,6 @@ fi
 
 }
 
-generate_crontab () {
-
-echo "0 * * * * /opt/f1-control/gcerevive.sh $INSTANCE_NAME $INSTANCE_ZONE $PROJECTID" | crontab -
-
-}
-
 spin_up_instance_first () {
 
 /opt/f1-control/spinup.sh $INSTANCE_NAME $INSTANCE_ZONE
@@ -55,6 +49,5 @@ run_as_root
 gcloud_auth
 spin_up_instance_first
 get_default_project
-generate_crontab
 
 exit
