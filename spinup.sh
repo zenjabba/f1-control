@@ -60,7 +60,12 @@ gcloud config set project $PROJECTID
 
 }
 
-wait_till 
+generate_crontab () {
+
+echo "0 * * * * /opt/f1-control/gcerevive.sh $INSTANCE_NAME $INSTANCE_ZONE $PROJECTID" | crontab -
+
+}
+
 # business end of the script
 
 get_default_project
@@ -82,3 +87,4 @@ sleep 60
 
 
 configure_rclone
+generate_crontab
