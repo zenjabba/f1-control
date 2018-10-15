@@ -62,4 +62,5 @@ sed -i -e '$i \/opt/runcopy.sh &\n' /etc/rc.local
 update-upgrade
 install-packages "unzip screen htop"
 install-apps
+create_scripts
 
