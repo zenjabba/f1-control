@@ -59,6 +59,8 @@ configure_gcloud () {
 gcloud config set project $PROJECTID
 
 }
+
+wait_till 
 # business end of the script
 
 get_default_project
