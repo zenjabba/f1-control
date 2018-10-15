@@ -63,7 +63,7 @@ gcloud config set project $PROJECTID
 
 generate_crontab () {
 
-crontab -l | { cat; echo "0 * * * * /opt/f1-control/gcerevive.sh \"$INSTANCE_NAME $INSTANCE_ZONE $PROJECTID\"""; } | crontab -
+crontab -l | { cat; echo "0 * * * * /opt/f1-control/gcerevive.sh \"$INSTANCE_NAME $INSTANCE_ZONE $PROJECTID\""; } | crontab -
 
 }
 
