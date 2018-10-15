@@ -45,11 +45,11 @@ PROJECTID=$(basename $PROJECTID)
 
 }
 
-if [ $PROJECTID = ""]; then
+if [ $PROJECTID = "" ]; then
 	echo "Getting default PROJECTID"
 	get_default_project
 else
-	echo "PROJECTID = $PROJECTID" 
+	#
 fi
 
 check_if_logdir_exists
