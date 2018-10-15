@@ -47,10 +47,11 @@ echo "Configure rclone for your new instance $BOLD$INSTANCE_NAME $NORMAL"
 
 gcloud compute config-ssh --quiet > /dev/null
 gcloud compute ssh --zone $ZONE $INSTANCE_NAME -- 'mkdir -p /root/.config/rclone'
-echo "Please define source:/ for source location and destination:/ for destination location"
+
 gcloud compute ssh  --quiet --zone $ZONE $INSTANCE_NAME -- 'curl https://raw.githubusercontent.com/zenjabba/f1-control/master/install-gce-copier.sh | sudo bash'
+echo "Please define source:/ for source location and destination:/ for destination location"
 gcloud compute ssh --zone $ZONE $INSTANCE_NAME -- '/usr/bin/rclone config --config=/root/.config/rclone/rclone.conf'
-gcloud compute ssh --zone --quiet $ZONE $INSTANCE_NAME -- 'reboot'
+gcloud compute ssh --quiet --zone $ZONE $INSTANCE_NAME -- 'reboot'
 
 }
 
@@ -66,6 +67,12 @@ crontab -l | { cat; echo "0 * * * * /opt/f1-control/gcerevive.sh \"$INSTANCE_NAM
 
 }
 
+google_available () {
+
+echo "Sleeping $BOLD 60 $NORMAL seconds till instance comes up"
+sleep 60
+
+}
 # business end of the script
 
 get_default_project
@@ -80,9 +87,6 @@ else
 	echo "$BOLDSpinup failed.$NORMAL Fix the error and start again with $0 $1 $2"
 	exit $?
 fi
-
-echo "Sleeping $BOLD 60 $NORMAL seconds till instance comes up"
-sleep 60
 
 
 configure_rclone
