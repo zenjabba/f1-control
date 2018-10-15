@@ -49,7 +49,7 @@ if [ $PROJECTID = "" ]; then
 	echo "Getting default PROJECTID"
 	get_default_project
 else
-	#
+	echo "" > /dev/null
 fi
 
 check_if_logdir_exists
