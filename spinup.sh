@@ -23,7 +23,7 @@ ZONE=$2
 get_default_project () {
 
 PROJECTID=$(sudo -s gcloud projects list --uri)
-PROJECTID=$(basename $PROJECTID)
+PROJECTID=$(basename "$PROJECTID")
 
 }
 
