@@ -77,6 +77,7 @@ if nc -w 1 -z $IP 22; then
     echo "Success! Instance available"
     sleep 10
 else
+    sleep 10
     google_available
 fi
 
