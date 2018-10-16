@@ -6,6 +6,6 @@ To install f1-control on your f1-gce server (which should be setup on your @gmai
 
 2. `sudo git clone https://github.com/zenjabba/f1-control`
 
-3. `sudo f1-control/configure-gce.sh "email address of GCE instance your want to run your mover instances in"`
+3. `sudo f1-control/configure-gce.sh email@address`
 
     The email address should be the email you have the free $300 credit on, and should be fully configured waiting for new instances
