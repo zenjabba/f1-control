@@ -69,10 +69,19 @@ crontab -l | { cat; echo "0 * * * * /opt/f1-control/gcerevive.sh $INSTANCE_NAME 
 
 google_available () {
 
-echo "Sleeping $BOLD 60 $NORMAL seconds till instance comes up"
-sleep 60
+echo "Sleeping till instance comes up"
+
+IP=$(gcloud compute instances list | awk '/'$my_name'/ {print $5}')
+
+if nc -w 1 -z $IP 22; then
+    echo "Success! Instance available"
+    sleep 10
+else
+    google_available
+fi
 
 }
+
 # business end of the script
 
 get_default_project
