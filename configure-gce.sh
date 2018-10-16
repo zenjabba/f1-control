@@ -4,7 +4,7 @@
 
 gcloud_auth () {
 
-sudo -s gcloud auth login --quiet $USERNAME
+sudo -s gcloud auth login --quiet $1
 
 }
 
