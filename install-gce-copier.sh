@@ -49,7 +49,7 @@ create_scripts () {
 echo "#!/bin/bash" >> /opt/runcopy.sh
 echo "" >> /opt/runcopy.sh
 echo "sleep 30" >> /opt/runcopy.sh
-echo "/usr/bin/rclone sync --config=/root/.config/rclone/rclone.conf -v --checkers=50 --transfers=40 --drive-chunk-size=64M --stats=60s --ignore-existing --fast-list source:/ destination:/" >> /opt/runcopy.sh
+echo "/usr/bin/rclone sync --config=/root/.config/rclone/rclone.conf -v --checkers=50 --transfers=40 --drive-chunk-size=64M --stats=60s --ignore-existing source:/ destination:/" >> /opt/runcopy.sh
 echo "shutdown -h now" >> /opt/runcopy.sh
 
 chmod a+x /opt/runcopy.sh
