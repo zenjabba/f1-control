@@ -45,6 +45,8 @@ PROJECTID=$(basename $PROJECTID)
 
 }
 
+project_id_process () {
+
 if [ $PROJECTID = "" ]; then
 	echo "Getting default PROJECTID"
 	get_default_project
@@ -52,6 +54,9 @@ else
 	echo "" > /dev/null
 fi
 
+}
+
+project_id_process
 check_if_logdir_exists
 check_status
 
