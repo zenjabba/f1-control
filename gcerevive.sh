@@ -3,7 +3,7 @@
 # general GCE startup script
 # Initial version from RXWatcher
 #  $1 INSTANCE, $2 ZONE $3 PROJECTID
-# Welcome to funtimes
+
 
 ZONE=$2
 INSTANCE=$1
