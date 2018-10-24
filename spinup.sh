@@ -45,7 +45,6 @@ configure_rclone () {
 
 echo "Configure rclone for your new instance $BOLD$INSTANCE_NAME $NORMAL"
 
-sudo -s gcloud compute config-ssh --quiet > /dev/null
 sudo -s gcloud compute ssh --zone $ZONE $INSTANCE_NAME -- 'mkdir -p /root/.config/rclone'
 
 sudo -s gcloud compute ssh  --quiet --zone $ZONE $INSTANCE_NAME -- 'curl https://raw.githubusercontent.com/zenjabba/f1-control/master/install-gce-copier.sh | sudo bash'
@@ -73,11 +72,15 @@ echo "Sleeping till instance comes up"
 
 IP=$(gcloud compute instances list | awk '/'$INSTANCE_NAME'/ {print $5}')
 
-if nc -w 1 -z $IP 22; then
-    sleep 100
+sudo -s gcloud compute config-ssh --quiet > /dev/null
+
+if [ $? -eq 0 ]; then
+    # do things for success
     echo "Success! Instance available"
 else
-    sleep 10
+    # do other things for failure
+    echo "Still not available, sleeping for 20 seconds"
+    sleep 20
     google_available
 fi
 
