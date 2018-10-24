@@ -62,9 +62,7 @@ sudo -s gcloud compute ssh --quiet --zone $ZONE $INSTANCE_NAME -- 'reboot'
 }
 
 configure_gcloud () {
-
 sudo -s gcloud config set project $PROJECTID
-
 }
 
 generate_crontab () {
