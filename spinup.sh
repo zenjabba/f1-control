@@ -29,7 +29,6 @@ PROJECTID=$(basename "$PROJECTID")
 
 spin_up_instance () {
 
-
 sudo -s gcloud beta compute instances create $INSTANCE_NAME --quiet --zone=$ZONE \
 --machine-type=$MACHINE_TYPE --subnet=default --network-tier=PREMIUM --no-restart-on-failure \
 --maintenance-policy=TERMINATE --preemptible  \
@@ -39,15 +38,22 @@ sudo -s gcloud beta compute instances create $INSTANCE_NAME --quiet --zone=$ZONE
 --boot-disk-size=10GB \
 --boot-disk-type=pd-standard \
 --boot-disk-device-name=$INSTANCE_NAME 
+
+if [ $? == 0 ]
+then
+    echo ""
+		
+else
+	echo "$BOLDSpinup failed.$NORMAL Fix the error and start again with $0 $1 $2"
+	exit $?
+fi
+
 }
 
 configure_rclone () {
 
 echo "Configure rclone for your new instance $BOLD$INSTANCE_NAME $NORMAL"
-
-sudo -s gcloud compute config-ssh --quiet > /dev/null
 sudo -s gcloud compute ssh --zone $ZONE $INSTANCE_NAME -- 'mkdir -p /root/.config/rclone'
-
 sudo -s gcloud compute ssh  --quiet --zone $ZONE $INSTANCE_NAME -- 'curl https://raw.githubusercontent.com/zenjabba/f1-control/master/install-gce-copier.sh | sudo bash'
 echo "Please define source:/ for source location and destination:/ for destination location"
 sudo -s gcloud compute ssh --zone $ZONE $INSTANCE_NAME -- '/usr/bin/rclone config --config=/root/.config/rclone/rclone.conf'
@@ -56,9 +62,7 @@ sudo -s gcloud compute ssh --quiet --zone $ZONE $INSTANCE_NAME -- 'reboot'
 }
 
 configure_gcloud () {
-
 sudo -s gcloud config set project $PROJECTID
-
 }
 
 generate_crontab () {
@@ -73,12 +77,18 @@ echo "Sleeping till instance comes up"
 
 IP=$(gcloud compute instances list | awk '/'$INSTANCE_NAME'/ {print $5}')
 
-if nc -w 1 -z $IP 22; then
-    sleep 100
-    echo "Success! Instance available"
-else
-    sleep 10
+sudo -s gcloud compute config-ssh --quiet > /dev/null
+
+if [ $? eq 0 ]; then
+    # do things for failure
+    echo "Still not available, sleeping for 20 seconds"
+    sleep 20
     google_available
+else
+    # do other things for success
+    
+    echo "Success! Instance available"
+    
 fi
 
 }
@@ -88,17 +98,7 @@ fi
 get_default_project
 configure_gcloud
 spin_up_instance
-
-if [ $? == 0 ]
-then
-    echo ""
-		
-else
-	echo "$BOLDSpinup failed.$NORMAL Fix the error and start again with $0 $1 $2"
-	exit $?
-fi
-
-
+google_available
 configure_rclone
 generate_crontab
 
