@@ -74,8 +74,8 @@ echo "Sleeping till instance comes up"
 IP=$(gcloud compute instances list | awk '/'$INSTANCE_NAME'/ {print $5}')
 
 if nc -w 1 -z $IP 22; then
+    sleep 100
     echo "Success! Instance available"
-    sleep 10
 else
     sleep 10
     google_available
