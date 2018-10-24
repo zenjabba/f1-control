@@ -29,7 +29,6 @@ PROJECTID=$(basename "$PROJECTID")
 
 spin_up_instance () {
 
-
 sudo -s gcloud beta compute instances create $INSTANCE_NAME --quiet --zone=$ZONE \
 --machine-type=$MACHINE_TYPE --subnet=default --network-tier=PREMIUM --no-restart-on-failure \
 --maintenance-policy=TERMINATE --preemptible  \
@@ -39,14 +38,22 @@ sudo -s gcloud beta compute instances create $INSTANCE_NAME --quiet --zone=$ZONE
 --boot-disk-size=10GB \
 --boot-disk-type=pd-standard \
 --boot-disk-device-name=$INSTANCE_NAME 
+
+if [ $? == 0 ]
+then
+    echo ""
+		
+else
+	echo "$BOLDSpinup failed.$NORMAL Fix the error and start again with $0 $1 $2"
+	exit $?
+fi
+
 }
 
 configure_rclone () {
 
 echo "Configure rclone for your new instance $BOLD$INSTANCE_NAME $NORMAL"
-
 sudo -s gcloud compute ssh --zone $ZONE $INSTANCE_NAME -- 'mkdir -p /root/.config/rclone'
-
 sudo -s gcloud compute ssh  --quiet --zone $ZONE $INSTANCE_NAME -- 'curl https://raw.githubusercontent.com/zenjabba/f1-control/master/install-gce-copier.sh | sudo bash'
 echo "Please define source:/ for source location and destination:/ for destination location"
 sudo -s gcloud compute ssh --zone $ZONE $INSTANCE_NAME -- '/usr/bin/rclone config --config=/root/.config/rclone/rclone.conf'
@@ -91,17 +98,7 @@ fi
 get_default_project
 configure_gcloud
 spin_up_instance
-
-if [ $? == 0 ]
-then
-    echo ""
-		
-else
-	echo "$BOLDSpinup failed.$NORMAL Fix the error and start again with $0 $1 $2"
-	exit $?
-fi
-
-
+google_available
 configure_rclone
 generate_crontab
 
