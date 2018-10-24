@@ -79,7 +79,7 @@ IP=$(gcloud compute instances list | awk '/'$INSTANCE_NAME'/ {print $5}')
 
 sudo -s gcloud compute config-ssh --quiet > /dev/null
 
-if [ $? -eq 0 ]; then
+if [ $? eq 0 ]; then
     # do things for failure
     echo "Still not available, sleeping for 20 seconds"
     sleep 20
