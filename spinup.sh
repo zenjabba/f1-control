@@ -83,12 +83,14 @@ sudo -s gcloud compute config-ssh --quiet > /dev/null
 
 if [ $? -eq 0 ]; then
     # do things for success
-    echo "Success! Instance available"
-else
-    # do other things for failure
     echo "Still not available, sleeping for 20 seconds"
     sleep 20
     google_available
+else
+    # do other things for failure
+    
+    echo "Success! Instance available"
+    
 fi
 
 }
