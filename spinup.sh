@@ -7,7 +7,7 @@
 BOLD=$(tput bold)
 NORMAL=$(tput sgr0)
 
-MACHINE_TYPE="n1-standard-8"
+MACHINE_TYPE="n1-standard-4"
 
 if [ "$#" -ne 0 ]
 then
@@ -15,6 +15,7 @@ then
 	
 else
 	echo "This script needs to take 2 variables ie, $0 instance_name zone"
+	exit 1
 fi
 
 INSTANCE_NAME=$1
