@@ -40,7 +40,7 @@ fi
 
 get_default_project () {
 
-PROJECTID=$(gcloud projects list --uri)
+PROJECTID=$(sudo -s /usr/bin/gcloud projects list --uri)
 PROJECTID=$(basename $PROJECTID)
 
 }
