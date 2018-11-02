@@ -80,16 +80,16 @@ IP=$(gcloud compute instances list | awk '/'$INSTANCE_NAME'/ {print $5}')
 
 sudo -s gcloud compute config-ssh --quiet > /dev/null
 
-if [ $? eq 0 ]
+if [ $? == 0 ]
 then
-    # do things for failure
+ 	echo "Success! Instance available"
+else
+    # do other things for success
+        # do things for failure
     echo "Still not available, sleeping for 20 seconds"
     sleep 20
     google_available
-else
-    # do other things for success
-    
-    echo "Success! Instance available"
+   
     
 fi
 
