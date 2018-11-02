@@ -13,7 +13,7 @@ LOGFILE="/var/log/gcerevive/$PROJECTID-$INSTANCE"
 check_status () {
 
 echo "$(date "+%d.%m.%Y %T") Checking $INSTANCE Status.."
-PRESTATUS=$(sudo -s sudo -s /usr/bin/gcloud compute instances describe $INSTANCE --project=$PROJECTID --zone=$ZONE | grep  "status")
+PRESTATUS=$(sudo -s /usr/bin/gcloud compute instances describe $INSTANCE --project=$PROJECTID --zone=$ZONE | grep  "status")
 STATUS=${PRESTATUS:7}
 if [ $STATUS = "RUNNING" ]; then
         echo "$(date "+%d.%m.%Y %T") $INSTANCE Instance is Running at"$(sudo -s /usr/bin/gcloud compute instances describe $INSTANCE --project=$PROJECTID --zone=$ZONE| grep natIP | cut -d':'  -f2) |tee -a $LOGFILE
