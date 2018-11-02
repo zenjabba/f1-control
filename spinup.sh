@@ -74,24 +74,24 @@ crontab -l | { cat; echo "0 * * * * /opt/f1-control/gcerevive.sh $INSTANCE_NAME 
 
 google_available () {
 
-echo "Sleeping till instance comes up"
+#echo "Sleeping till instance comes up"
 
-IP=$(gcloud compute instances list | awk '/'$INSTANCE_NAME'/ {print $5}')
+#IP=$(gcloud compute instances list | awk '/'$INSTANCE_NAME'/ {print $5}')
 
-sudo -s gcloud compute config-ssh --quiet > /dev/null
+#sudo -s gcloud compute config-ssh --quiet > /dev/null
 
-if [ $? == 0 ]
-then
- 	echo "Success! Instance available"
-else
+#if [ $? == 0 ]
+#then
+#	echo "Success! Instance available"
+#else
     # do other things for success
         # do things for failure
-    echo "Still not available, sleeping for 20 seconds"
-    sleep 20
-    google_available
+#    echo "Still not available, sleeping for 20 seconds"
+   sleep 200
+#    google_available
    
     
-fi
+#fi
 
 }
 
