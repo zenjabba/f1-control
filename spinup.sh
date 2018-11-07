@@ -7,7 +7,7 @@
 BOLD=$(tput bold)
 NORMAL=$(tput sgr0)
 
-MACHINE_TYPE="n1-standard-8"
+MACHINE_TYPE="n1-standard-4"
 
 if [ "$#" -ne 0 ]
 then
@@ -15,6 +15,7 @@ then
 	
 else
 	echo "This script needs to take 2 variables ie, $0 instance_name zone"
+	exit 1
 fi
 
 INSTANCE_NAME=$1
@@ -73,23 +74,24 @@ crontab -l | { cat; echo "0 * * * * /opt/f1-control/gcerevive.sh $INSTANCE_NAME 
 
 google_available () {
 
-echo "Sleeping till instance comes up"
+#echo "Sleeping till instance comes up"
 
-IP=$(gcloud compute instances list | awk '/'$INSTANCE_NAME'/ {print $5}')
+#IP=$(gcloud compute instances list | awk '/'$INSTANCE_NAME'/ {print $5}')
 
-sudo -s gcloud compute config-ssh --quiet > /dev/null
+#sudo -s gcloud compute config-ssh --quiet > /dev/null
 
-if [ $? eq 0 ]; then
-    # do things for failure
-    echo "Still not available, sleeping for 20 seconds"
-    sleep 20
-    google_available
-else
+#if [ $? == 0 ]
+#then
+#	echo "Success! Instance available"
+#else
     # do other things for success
+        # do things for failure
+#    echo "Still not available, sleeping for 20 seconds"
+   sleep 200
+#    google_available
+   
     
-    echo "Success! Instance available"
-    
-fi
+#fi
 
 }
 

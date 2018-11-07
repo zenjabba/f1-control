@@ -1,6 +1,6 @@
 # f1-control
 
-To install f1-control on your f1-gce server (which should be setup on your @gmail account because it's free and you never want it to go away)
+To install f1-control on your f1-gce server (using Ubuntu 16.04 LTS) (which should be setup on your @gmail account because it's free and you never want it to go away)
 
 1. `cd /opt`
 
