@@ -3,6 +3,7 @@
 # This is the user configuration section
 # $1 = Name of Instance
 # $2 = Zone to run it in
+# $3 = gmail account to auth GCE against
 
 BOLD=$(tput bold)
 NORMAL=$(tput sgr0)
@@ -14,15 +15,16 @@ then
 	sleep 1
 	
 else
-	echo "This script needs to take 2 variables ie, $0 instance_name zone"
+	echo "This script needs to take 2 variables ie, $0 instance_name zone GCE-Account-Name"
 	exit 1
 fi
 
 INSTANCE_NAME=$1
 ZONE=$2
+USERACCOUNT=$3
 
 get_default_project () {
-
+sudo -s gcloud auth login $USERACCOUNT --activate --quiet
 PROJECTID=$(sudo -s gcloud projects list --uri)
 PROJECTID=$(basename "$PROJECTID")
 
@@ -32,7 +34,7 @@ spin_up_instance () {
 
 sudo -s gcloud beta compute instances create $INSTANCE_NAME --quiet --zone=$ZONE \
 --machine-type=$MACHINE_TYPE --subnet=default --network-tier=PREMIUM --no-restart-on-failure \
---maintenance-policy=TERMINATE --preemptible  \
+--maintenance-policy=TERMINATE \
 --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append \
 --image=ubuntu-1604-xenial-v20181004 \
 --image-project=ubuntu-os-cloud \
@@ -45,7 +47,7 @@ then
     echo ""
 		
 else
-	echo "$BOLDSpinup failed.$NORMAL Fix the error and start again with $0 $1 $2"
+	echo "$BOLDSpinup failed.$NORMAL Fix the error and start again with $0 $1 $2 $3"
 	exit $?
 fi
 
@@ -68,7 +70,7 @@ sudo -s gcloud config set project $PROJECTID
 
 generate_crontab () {
 
-crontab -l | { cat; echo "0 * * * * /opt/f1-control/gcerevive.sh $INSTANCE_NAME $ZONE $PROJECTID"; } | crontab -
+crontab -l | { cat; echo "0 * * * * /opt/f1-control/gcerevive.sh $INSTANCE_NAME $ZONE $PROJECTID "; } | crontab -
 
 }
 
