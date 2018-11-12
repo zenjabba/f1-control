@@ -2,13 +2,15 @@
 # GCE Instance Revive Script
 # general GCE startup script
 # Initial version from RXWatcher
-# $1 INSTANCE, $2 ZONE $3 PROJECTID
+# $1 INSTANCE, $2 ZONE $3 PROJECTID $4 username to check against
 
 
 ZONE=$2
 INSTANCE=$1
 PROJECTID=$3
 LOGFILE="/var/log/gcerevive/$PROJECTID-$INSTANCE"
+
+gcloud config configurations activate $4
 
 check_status () {
 
